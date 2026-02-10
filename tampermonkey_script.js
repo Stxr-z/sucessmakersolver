@@ -140,6 +140,11 @@ const LLM_MODEL = 'llava'; // Vision-capable model, run: ollama pull llava
         solverButton.onmouseout = () => solverButton.style.backgroundColor = '#22c55e';
         statsPanel.appendChild(solverButton);
 
+        // Create content div for stats that will be updated
+        const statsContentDiv = document.createElement('div');
+        statsContentDiv.id = 'sm-stats-panel-content';
+        statsPanel.appendChild(statsContentDiv);
+
         // Function to update stats display
         function updateStats() {
             const saved = parseInt(localStorage.getItem('sm_problems_solved') || '0');
@@ -147,9 +152,6 @@ const LLM_MODEL = 'llava'; // Vision-capable model, run: ollama pull llava
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
-
-            // Get all elements except the button (which is the first child)
-            const statsContent = document.querySelector('#sm-stats-panel-content') || statsPanel;
             
             let statsHtml = `
                 <div style="margin-bottom: 8px; font-weight: bold; color: #22c55e;">📊 Progress Tracker</div>
@@ -170,12 +172,7 @@ const LLM_MODEL = 'llava'; // Vision-capable model, run: ollama pull llava
                 statsHtml += `<div style="background-color: #3a3a1f; border-left: 4px solid #f59e0b; padding: 8px; border-radius: 2px; color: #fcd34d;"><strong>${remaining}</strong> more needed to reach quota</div>`;
             }
 
-            if (!document.getElementById('sm-stats-panel-content')) {
-                const contentDiv = document.createElement('div');
-                contentDiv.id = 'sm-stats-panel-content';
-                statsPanel.appendChild(contentDiv);
-            }
-            document.getElementById('sm-stats-panel-content').innerHTML = statsHtml;
+            statsContentDiv.innerHTML = statsHtml;
         }
 
         updateStats();
