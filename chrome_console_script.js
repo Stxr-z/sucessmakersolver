@@ -77,7 +77,7 @@
 
         // Add close button
         const closeBtn = document.createElement('button');
-        closeBtn.innerHTML = '✕';
+        closeBtn.innerHTML = '−';
         closeBtn.style.cssText = `
             background: none;
             border: none;
@@ -97,9 +97,41 @@
         closeBtn.onmouseout = () => closeBtn.style.opacity = '1';
         closeBtn.onclick = () => {
             container.style.display = 'none';
+            minimizeBtn.style.display = 'block';
         };
         headerBar.appendChild(closeBtn);
         container.appendChild(headerBar);
+
+        // Create minimized button
+        const minimizeBtn = document.createElement('button');
+        minimizeBtn.id = 'sm-minimize-btn';
+        minimizeBtn.innerHTML = 'O';
+        minimizeBtn.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10000;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        `;
+        minimizeBtn.onmouseover = () => minimizeBtn.style.backgroundColor = '#16a34a';
+        minimizeBtn.onmouseout = () => minimizeBtn.style.backgroundColor = '#22c55e';
+        minimizeBtn.onclick = () => {
+            container.style.display = 'block';
+            minimizeBtn.style.display = 'none';
+        };
+        document.body.appendChild(minimizeBtn);
 
         // Add stats panel
         const statsPanel = document.createElement('div');
